@@ -1,0 +1,61 @@
+{
+  "name": "Bridge Route Pinger",
+  "description": "Get live bridge routes with fees and time estimates for cross-chain token transfers",
+  "version": "1.0.0",
+  "author": "Bridge Route Pinger",
+  "endpoints": [
+    {
+      "path": "/api/v1/bridge/routes",
+      "method": "POST",
+      "description": "Find optimal bridge routes between chains",
+      "payment": {
+        "required": true,
+        "amount": 0.02,
+        "currency": "USDC",
+        "protocol": "x402"
+      },
+      "parameters": {
+        "token": {
+          "type": "string",
+          "required": true,
+          "enum": ["USDC", "USDT", "ETH", "WETH"],
+          "description": "Token to bridge"
+        },
+        "amount": {
+          "type": "string",
+          "required": true,
+          "description": "Amount to bridge"
+        },
+        "from_chain": {
+          "type": "string",
+          "required": true,
+          "enum": ["ethereum", "polygon", "arbitrum", "optimism", "base"],
+          "description": "Source chain"
+        },
+        "to_chain": {
+          "type": "string",
+          "required": true,
+          "enum": ["ethereum", "polygon", "arbitrum", "optimism", "base"],
+          "description": "Destination chain"
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "routes": {
+            "type": "array",
+            "description": "Available bridge routes sorted by total cost"
+          },
+          "recommended_route": {
+            "type": "object",
+            "description": "Recommended route with reasoning"
+          }
+        }
+      }
+    }
+  ],
+  "support": {
+    "chains": ["ethereum", "polygon", "arbitrum", "optimism", "base"],
+    "tokens": ["USDC", "USDT", "ETH", "WETH"]
+  }
+}

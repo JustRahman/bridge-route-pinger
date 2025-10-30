@@ -1,0 +1,29 @@
+{
+  "name": "bridge-route-pinger",
+  "version": "1.0.0",
+  "description": "X402-compatible API that aggregates bridge routes across multiple providers",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "bridge",
+    "cross-chain",
+    "x402",
+    "crypto",
+    "defi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
