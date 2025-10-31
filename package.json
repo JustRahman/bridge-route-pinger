@@ -18,10 +18,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.0",
+    "@hono/node-server": "^1.19.5",
+    "@lucid-dreams/agent-kit": "^0.2.22",
     "axios": "^1.6.0",
     "dotenv": "^16.3.0",
-    "cors": "^2.8.5"
+    "ethers": "^6.15.0",
+    "x402": "^0.7.1",
+    "x402-fetch": "^0.7.0",
+    "zod": "^4.1.12"
   },
   "engines": {
     "node": ">=20.0.0"

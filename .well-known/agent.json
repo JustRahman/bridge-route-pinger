@@ -10,9 +10,12 @@
       "description": "Find optimal bridge routes between chains",
       "payment": {
         "required": true,
+        "protocol": "x402",
         "amount": 0.02,
         "currency": "USDC",
-        "protocol": "x402"
+        "network": "base",
+        "recipient": "0x992920386E3D950BC260f99C81FDA12419eD4594",
+        "facilitator": "https://facilitator.daydreams.systems"
       },
       "parameters": {
         "token": {

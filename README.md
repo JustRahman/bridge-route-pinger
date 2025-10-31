@@ -44,6 +44,83 @@ The server will start on port 3000 by default (or `PORT` environment variable if
 
 **No API keys required!** The bridge aggregator APIs (Socket.tech and LI.FI) are free and public.
 
+## Payment Integration (X402)
+
+This API requires payment via the X402 protocol for each request.
+
+### Payment Details
+- **Amount:** 0.02 USDC
+- **Network:** Base
+- **Recipient:** EdTWN4SLpnBMnrwsmuD6nrbnDua5YDMJ1We3g8nmCZvS
+- **Facilitator:** https://facilitator.daydreams.systems
+
+### Testing Payment Flow
+
+1. **Set up environment:**
+```bash
+cp .env.example .env
+# Add your PRIVATE_KEY for testing (optional)
+```
+
+2. **Run payment test:**
+```bash
+npm run test:payment
+```
+
+This script:
+1. Calls API without payment (receives 402)
+2. Creates payment via facilitator
+3. Retries with payment token
+4. Shows successful response
+
+### Manual Payment Flow
+
+**Step 1: Get 402 response**
+```bash
+curl -X POST http://localhost:3000/api/v1/bridge/routes \
+  -H "Content-Type: application/json" \
+  -d '{"token":"USDC","amount":"100","from_chain":"ethereum","to_chain":"polygon"}'
+```
+
+Response includes payment mandate with instructions.
+
+**Step 2: Create payment**
+```bash
+curl -X POST https://facilitator.daydreams.systems/payment/create \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": "0.02",
+    "currency": "USDC",
+    "recipient": "EdTWN4SLpnBMnrwsmuD6nrbnDua5YDMJ1We3g8nmCZvS",
+    "network": "base"
+  }'
+```
+
+**Step 3: Retry with payment token**
+```bash
+curl -X POST http://localhost:3000/api/v1/bridge/routes \
+  -H "Content-Type: application/json" \
+  -H "X-Payment-Token: <transaction_hash>" \
+  -H "X-Payment-Amount: 0.02" \
+  -H "X-Payment-Currency: USDC" \
+  -d '{"token":"USDC","amount":"100","from_chain":"ethereum","to_chain":"polygon"}'
+```
+
+### Environment Variables for Payment
+
+Required in `.env` or deployment environment:
+
+```bash
+FACILITATOR_URL=https://facilitator.daydreams.systems
+PAY_TO_WALLET=EdTWN4SLpnBMnrwsmuD6nrbnDua5YDMJ1We3g8nmCZvS
+PAYMENT_NETWORK=base
+PAYMENT_AMOUNT=0.02
+PAYMENT_CURRENCY=USDC
+
+# Optional: For testing payment flow
+PRIVATE_KEY=your_private_key
+```
+
 ## API Endpoints
 
 ### POST /api/v1/bridge/routes
